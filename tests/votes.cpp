@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+#include "templates.hpp"
+
 #include "../free_list.cpp"
 #include "../full_list.cpp"
 #include "../partial_list.cpp"
@@ -11,8 +13,8 @@ using namespace panachage;
 
 int main(void)
 {
-    partylist listA = partylist(1, "Party A", {101, 102, 103, 104, 105, 106});
-    partylist listB = partylist(2, "Party B", {201, 202, 203, 204, 205, 206});
+    partylist listA = TEMP_LIST_A;
+    partylist listB = TEMP_LIST_B;
     std::vector<partylist *> lists = {&listA, &listB};
 
     PartialListVote partial(&listA, {101, 103}, {104, 201});
