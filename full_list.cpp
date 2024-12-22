@@ -8,7 +8,7 @@ namespace panachage
     {
         partylist *plist;
 
-        void count(std::vector<partylist> lists)
+        void count(std::vector<partylist*> lists)
         {
             for (auto c : plist->candidate_votes)
             {

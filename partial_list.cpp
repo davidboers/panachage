@@ -15,7 +15,7 @@ namespace panachage
         std::vector<candidate::id_type> added;
 
     public:
-        void count(std::vector<partylist> lists)
+        void count(std::vector<partylist *> lists)
         {
             for (auto c : plist->candidate_votes)
             {
@@ -37,7 +37,7 @@ namespace panachage
          * * No candidate can be found in both `struckthrough` and `added`.
          * * No candidate can appear in `added` more than the specified number of times.
          * * No candidate can appear more than once in `struckthrough`.
-         * * Added cannot be longer than struckthrough.
+         * * Added cannot be longer than `struckthrough`.
          *
          */
         bool validate()
