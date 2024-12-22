@@ -8,7 +8,8 @@ namespace panachage
     {
         partylist *plist;
 
-        void count(std::vector<partylist*> lists)
+    public:
+        void count(std::vector<partylist *> lists)
         {
             for (auto c : plist->candidate_votes)
             {
@@ -21,6 +22,8 @@ namespace panachage
         {
             return true;
         }
+
+        inline FullListVote(partylist *plist) : plist(plist) {}
     };
 
 }
