@@ -31,6 +31,8 @@ namespace panachage
                 // This won't work for candidates on another list.
                 plist->candidate_votes[id]++;
             }
+
+            plist->at_large_votes += struckthrough.size() - added.size();
         }
 
         /*
