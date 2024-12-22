@@ -12,11 +12,12 @@ namespace panachage
     {
         std::vector<candidate::id_type> votes;
 
-        void count(std::vector<partylist*> lists)
+    public:
+        void count(std::vector<partylist *> lists)
         {
             for (candidate::id_type cand_id : votes)
             {
-                for (partylist* plist : lists)
+                for (partylist *plist : lists)
                 {
                     std::vector<candidate::id_type> candidates = candidateList(plist);
                     if (!!std::count(candidates.begin(), candidates.end(), cand_id))
@@ -27,9 +28,11 @@ namespace panachage
             }
         }
 
-        bool validate()
+        inline bool validate()
         {
             return votes.size() <= seats;
         }
+
+        inline FreeVote(std::vector<candidate::id_type> votes) : votes(votes) {}
     };
 }
