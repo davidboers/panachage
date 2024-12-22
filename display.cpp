@@ -46,7 +46,7 @@ namespace panachage
                     partylist *list = row_lists[i];
                     if (r <= list->candidate_votes.size())
                     {
-                        std::vector<candidate::id_type> cs = candidateList(list);
+                        std::vector<candidate::id_type> cs = list->candidateList();
                         const candidate::id_type cand_id = cs[r - 1];
                         printf("| %-3i | %-5i | %-5i |", r, cand_id, list->candidate_votes[cand_id]);
                         printf(margin.c_str());

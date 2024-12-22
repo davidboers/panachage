@@ -11,8 +11,8 @@ using namespace panachage;
 
 int main(void)
 {
-    partylist listA = new_partylist(1, "Party A", {101, 102, 103, 104, 105, 106});
-    partylist listB = new_partylist(2, "Party B", {201, 202, 203, 204, 205, 206});
+    partylist listA = partylist(1, "Party A", {101, 102, 103, 104, 105, 106});
+    partylist listB = partylist(2, "Party B", {201, 202, 203, 204, 205, 206});
     std::vector<partylist *> lists = {&listA, &listB};
 
     PartialListVote partial(&listA, {101, 103}, {104, 201});

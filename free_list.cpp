@@ -19,7 +19,7 @@ namespace panachage
             {
                 for (partylist *plist : lists)
                 {
-                    std::vector<candidate::id_type> candidates = candidateList(plist);
+                    std::vector<candidate::id_type> candidates = plist->candidateList();
                     if (!!std::count(candidates.begin(), candidates.end(), cand_id))
                     {
                         plist->candidate_votes[cand_id]++;

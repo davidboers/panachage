@@ -30,7 +30,7 @@ namespace panachage
             {
                 for (partylist *listi : lists)
                 {
-                    std::vector<candidate::id_type> cs = candidateList(listi);
+                    std::vector<candidate::id_type> cs = listi->candidateList();
                     if (!!std::count(cs.begin(), cs.end(), id))
                     {
                         listi->candidate_votes[id]++;
@@ -60,7 +60,7 @@ namespace panachage
             for (candidate::id_type id : added)
             {
                 int substitutions = std::count(added.begin(), added.end(), id);
-                std::vector<candidate::id_type> cs = candidateList(plist);
+                std::vector<candidate::id_type> cs = plist->candidateList();
                 int onlist = !!(std::count(cs.begin(), cs.end(), id));
                 int votes_for = substitutions + onlist;
                 if (votes_for > max_4_cand)
