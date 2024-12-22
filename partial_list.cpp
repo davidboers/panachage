@@ -36,6 +36,8 @@ namespace panachage
          * * No candidate can be found in both `struckthrough` and `added`.
          * * No candidate can appear in `added` more than the specified number of times.
          * * No candidate can appear more than once in `struckthrough`.
+         * * Added cannot be longer than struckthrough.
+         *
          */
         bool validate()
         {
@@ -56,6 +58,19 @@ namespace panachage
                 {
                     return false;
                 }
+            }
+
+            for (candidate::id_type id : struckthrough)
+            {
+                if (std::count(struckthrough.begin(), struckthrough.end(), id) > 1)
+                {
+                    return false;
+                }
+            }
+
+            if (added.size() > struckthrough.size())
+            {
+                return false;
             }
 
             return true;
