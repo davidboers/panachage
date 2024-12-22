@@ -39,6 +39,16 @@ namespace panachage
             }
             return cs;
         }
+
+        int totalVotes()
+        {
+            int tv = this->at_large_votes;
+            for (auto p : this->candidate_votes)
+            {
+                tv += p.second;
+            }
+            return tv;
+        }
     };
 
 }
