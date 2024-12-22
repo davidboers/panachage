@@ -14,6 +14,7 @@ namespace panachage
         std::vector<candidate::id_type> struckthrough;
         std::vector<candidate::id_type> added;
 
+    public:
         void count(std::vector<partylist> lists)
         {
             for (auto c : plist->candidate_votes)
@@ -75,6 +76,11 @@ namespace panachage
 
             return true;
         }
+
+        PartialListVote(partylist *plist,
+                        std::vector<candidate::id_type> struckthrough,
+                        std::vector<candidate::id_type> added)
+            : plist(plist), struckthrough(struckthrough), added(added) {};
     };
 
 }
