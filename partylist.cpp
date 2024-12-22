@@ -49,6 +49,19 @@ namespace panachage
             }
             return tv;
         }
+
+        std::vector<candidate::id_type> elected(const int seats_won)
+        {
+            std::vector<std::pair<candidate::id_type, int>> temp_cands(this->candidate_votes.begin(), this->candidate_votes.end());
+            std::sort(temp_cands.begin(), temp_cands.end(), [](std::pair<candidate::id_type, int> *a, std::pair<candidate::id_type, int> *b)
+                      { return a->second < b->second; });
+            std::vector<candidate::id_type> out;
+            for (auto p : temp_cands)
+            {
+                out.push_back(p.first);
+            }
+            return out;
+        }
     };
 
 }
