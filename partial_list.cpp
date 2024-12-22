@@ -28,8 +28,14 @@ namespace panachage
 
             for (candidate::id_type id : added)
             {
-                // This won't work for candidates on another list.
-                plist->candidate_votes[id]++;
+                for (partylist *listi : lists)
+                {
+                    std::vector<candidate::id_type> cs = candidateList(listi);
+                    if (!!std::count(cs.begin(), cs.end(), id))
+                    {
+                        listi->candidate_votes[id]++;
+                    }
+                }
             }
 
             plist->at_large_votes += struckthrough.size() - added.size();
