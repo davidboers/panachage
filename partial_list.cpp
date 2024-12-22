@@ -87,7 +87,7 @@ namespace panachage
 
         PartialListVote(partylist *plist,
                         std::vector<candidate::id_type> struckthrough,
-                        std::vector<candidate::id_type> added)
+                        std::vector<candidate::id_type> added = {})
             : plist(plist), struckthrough(struckthrough), added(added) {};
     };
 
