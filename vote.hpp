@@ -2,6 +2,8 @@
 
 #include "partylist.cpp"
 
+#pragma once
+
 namespace panachage
 {
 

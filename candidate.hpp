@@ -1,5 +1,7 @@
 #include <string>
 
+#pragma once
+
 namespace panachage
 {
 
