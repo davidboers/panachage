@@ -1,6 +1,8 @@
 #include "vote.hpp"
 #include "partylist.cpp"
 
+#pragma once
+
 namespace panachage
 {
 
