@@ -95,15 +95,16 @@ namespace panachage
                         candidate::id_type *added = {})
             : plist(plist)
         {
+            candidate::id_type h;
             while (*struckthrough)
             {
-                candidate::id_type h = *struckthrough++;
+                h = *struckthrough++;
                 this->struckthrough.push_back(h);
             }
 
             while (*added)
             {
-                candidate::id_type h = *added++;
+                h = *added++;
                 this->added.push_back(h);
             }
         };
