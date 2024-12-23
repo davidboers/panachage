@@ -1,4 +1,4 @@
-// bison -dy votes.y
+// bison -dy votes.y -b votes
 
 %parse-param {const char* filename}
 %parse-param {std::vector<panachage::Vote*>* votes}

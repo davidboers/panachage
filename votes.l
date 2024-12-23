@@ -3,7 +3,7 @@
 
 %{
 
-// flex votes.l
+// flex -o votes_lexer.c votes.l
 
 #include <stdlib.h>
 

@@ -1,6 +1,6 @@
 .vscode/
 *.exe
 
-lex.yy.c
-y.tab.c
-y.tab.h
+*_lexer.c
+*.tab.c
+*.tab.h
