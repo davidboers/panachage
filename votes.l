@@ -20,7 +20,7 @@ int yycolumn = 1;
 
 [0-9]+  { yylval.ival = std::atoi(yytext); return number; }
 [ \t]   ;
-#       ;
+#.*     ;
 [\n\r]  { yycolumn = 1;     }
 <<EOF>> { yyterminate();    }
 .       { return yytext[0]; }
