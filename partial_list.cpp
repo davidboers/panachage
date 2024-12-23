@@ -22,7 +22,7 @@ namespace panachage
                 candidate::id_type id = c.first;
                 if (std::count(struckthrough.begin(), struckthrough.end(), id) == 0)
                 {
-                    plist->candidate_votes[id]++;
+                    plist->candidate_votes[id] += this->copies;
                 }
             }
 
@@ -33,12 +33,12 @@ namespace panachage
                     std::vector<candidate::id_type> cs = listi->candidateList();
                     if (!!std::count(cs.begin(), cs.end(), id))
                     {
-                        listi->candidate_votes[id]++;
+                        listi->candidate_votes[id] += this->copies;
                     }
                 }
             }
 
-            plist->at_large_votes += struckthrough.size() - added.size();
+            plist->at_large_votes += (struckthrough.size() - added.size()) * this->copies;
         }
 
         /*

@@ -16,7 +16,7 @@ namespace panachage
             for (auto c : plist->candidate_votes)
             {
                 candidate::id_type id = c.first;
-                plist->candidate_votes[id]++;
+                plist->candidate_votes[id] += this->copies;
             }
         }
 

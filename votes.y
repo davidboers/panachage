@@ -27,6 +27,7 @@ using panachage::yy_lst_append;
 %token partial 112 // p
 %token blank 98    // b
 
+%token star 42     // *
 %token sep 124     // |
 %token numsep 44   // ,
 
@@ -36,9 +37,13 @@ using panachage::yy_lst_append;
 
 %%
 
-start : vote       { votes->push_back($<vval>1); }
-      | start vote { votes->push_back($<vval>2); }
+start : parcel       
+      | start parcel
       ;
+
+parcel : number star vote { $<vval>3->setCopies($<ival>1); votes->push_back($<vval>3); }
+       | vote             { votes->push_back($<vval>1);                                }
+       ;
 
 vote : full sep partylist                            { $<vval>$ = new panachage::FullListVote($<plval>3);                          }
      | partial sep partylist sep numbers             { $<vval>$ = new panachage::PartialListVote($<plval>3, $<clval>5);            }
