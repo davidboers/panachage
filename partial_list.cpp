@@ -85,10 +85,28 @@ namespace panachage
             return true;
         }
 
-        PartialListVote(partylist *plist,
-                        std::vector<candidate::id_type> struckthrough,
-                        std::vector<candidate::id_type> added = {})
+        inline PartialListVote(partylist *plist,
+                               std::vector<candidate::id_type> struckthrough,
+                               std::vector<candidate::id_type> added = {})
             : plist(plist), struckthrough(struckthrough), added(added) {};
+
+        PartialListVote(partylist *plist,
+                        candidate::id_type *struckthrough,
+                        candidate::id_type *added = {})
+            : plist(plist)
+        {
+            while (*struckthrough)
+            {
+                candidate::id_type h = *struckthrough++;
+                this->struckthrough.push_back(h);
+            }
+
+            while (*added)
+            {
+                candidate::id_type h = *added++;
+                this->added.push_back(h);
+            }
+        };
     };
 
 }

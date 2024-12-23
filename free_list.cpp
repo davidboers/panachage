@@ -34,5 +34,14 @@ namespace panachage
         }
 
         inline FreeVote(std::vector<candidate::id_type> votes) : votes(votes) {}
+
+        FreeVote(candidate::id_type *votes)
+        {
+            while (*votes)
+            {
+                candidate::id_type h = *votes++;
+                this->votes.push_back(h);
+            }
+        }
     };
 }
