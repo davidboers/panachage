@@ -102,10 +102,17 @@ namespace panachage
                 this->struckthrough.push_back(h);
             }
 
-            while (*added)
+            if (added == nullptr)
             {
-                h = *added++;
-                this->added.push_back(h);
+                this->added;
+            }
+            else
+            {
+                while (*added)
+                {
+                    h = *added++;
+                    this->added.push_back(h);
+                }
             }
         };
     };
