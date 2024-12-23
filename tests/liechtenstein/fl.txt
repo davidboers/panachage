@@ -1,0 +1,11 @@
+.id = 3
+.avl = 8250
+begin
+#301@Kaufmann Georg+1757
+#302@Haldner-Schierscher Manuela+1597
+#303@Gstöhl Nadine+1492
+#304@Lageder Thomas+1467
+#305@Rheinberger Moritz+1445
+#306@Hasler René+1390
+#307@Vogt-Beck Corina+1354
+#308@Büchel Brühwiler Conny+1274

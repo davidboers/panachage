@@ -1,0 +1,11 @@
+.id=4
+.at_large_votes=6143
+begin
+#401@Rehak Thomas+1686
+#402@Ospelt Pascal+1098
+#403@Kaufmann Herta+1011
+#404@Meier Alex+939
+#405@Foser Bruno+892
+#406@Foser Philipp+833
+#407@Rick Roland+819
+#408@Pawlitzek René+706

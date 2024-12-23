@@ -1,0 +1,18 @@
+.name = "vu"
+.at-large-votes = 12480
+.id = 1
+begin
+#101@Kaufmann Manfred+4117
+#102@Vogt Thomas+3574
+#103@Bühler-Nigsch Dagmar+3554
+#104@Vogt Günter+3307
+#105@Frick Walter+3162
+#106@Heidegger Norma+3122
+#107@Schädler Philip+3101
+#108@Gstöhl Markus+3051
+#109@Hilti-Saleem Gabriela+3041
+#110@Frommelt Etienne+3015
+#111@Beck Rainer+2973
+#112@Feger-Risch Roswitha+2922
+#113@Baur Georges+2895
+#114@Frommelt Otto C.+2780

@@ -1,0 +1,15 @@
+.avl = 12480
+.id = 2
+begin
+#201@Schädler Sebastian+3697
+#202@Seger Daniel+3605
+#203@Lampert Wendelin+3552
+#204@Frick Albert+3437
+#205@Quaderer Sascha+3420
+#206@Petzold-Mähr Bettina+3223
+#207@Vogelsang Nadine+3155
+#208@Kindle Elke+3066
+#209@Ospelt Daniel+3033
+#210@Wille Damian+2830
+#211@Heutschi-Rhomberg Andrea+2700
+#212@Bechter Eva-Maria+2646
