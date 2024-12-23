@@ -91,8 +91,8 @@ namespace panachage
             : plist(plist), struckthrough(struckthrough), added(added) {};
 
         PartialListVote(partylist *plist,
-                        candidate::id_type *struckthrough,
-                        candidate::id_type *added = {})
+                        const candidate::id_type *struckthrough,
+                        const candidate::id_type *added = {})
             : plist(plist)
         {
             candidate::id_type h;
