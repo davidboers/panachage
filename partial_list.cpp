@@ -43,9 +43,9 @@ namespace panachage
 
         /*
          * * No candidate can be found in both `struckthrough` and `added`.
-         * * No candidate can appear in `added` more than the specified number of times.
+         * * No candidate can be voted for more than the specified number of times.
          * * No candidate can appear more than once in `struckthrough`.
-         * * Added cannot be longer than `struckthrough`.
+         * * `added` cannot be longer than `struckthrough`.
          *
          */
         bool validate()
