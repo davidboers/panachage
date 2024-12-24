@@ -22,13 +22,19 @@ namespace panachage
 
         partylist(const partylist::id_type id,
                   const std::string name,
-                  const std::vector<candidate::id_type> candidates)
-            : id(id), name(name), at_large_votes(0)
+                  const std::vector<candidate::id_type> candidates = {},
+                  const int at_large_votes = 0)
+            : id(id), name(name), at_large_votes(at_large_votes)
         {
             for (candidate::id_type cand_id : candidates)
             {
                 this->candidate_votes[cand_id] = 0;
             }
+        }
+
+        void newCandidate(const candidate::id_type cand_id)
+        {
+            this->candidate_votes[cand_id] = 0;
         }
 
         std::vector<candidate::id_type> candidateList()
