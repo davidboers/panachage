@@ -29,10 +29,19 @@ int total_valid_poll(const int partyc, lrm_party parties[partyc])
     return tvp;
 }
 
+// Quota functions
+
 double hare(const int partyc, lrm_party parties[partyc], int seats)
 {
     return floor(total_valid_poll(partyc, parties) / (double)seats);
 }
+
+double droop(const int partyc, lrm_party parties[partyc], int seats)
+{
+    return floor(total_valid_poll(partyc, parties) / (double)(seats + 1)) + 1;
+}
+
+// Procedure
 
 int comp_residual(const void *elem1, const void *elem2)
 {
