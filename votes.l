@@ -1,11 +1,10 @@
 %option noyywrap
 %option yylineno
+%option prefix="v"
 
 %{
 
 // flex -o votes_lexer.c votes.l
-
-#include <stdlib.h>
 
 #include "lex_utils.h"
 #include "votes.tab.h"
@@ -14,7 +13,7 @@
 
 %%
 
-[0-9]+  { yylval.ival = std::atoi(yytext); return number; }
+[0-9]+  { vlval.ival = std::atoi(yytext); return number; }
 [ \t]   ;
 #.*     ;
 [\n\r]  { yycolumn = 1;     }
