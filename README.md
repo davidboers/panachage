@@ -16,6 +16,21 @@ The voter may cast their ballot in one of three ways:
 * Choosing a party list, and striking out the names of certain candidates, and adding the names of others. Depending on the country, the voter may be able to duplicate their vote for a candidate on the chosen list this way, but casting more than two votes for the same candidate is usually prohibited. Every time the voter strikes out a candidate, they may add another. If there aren't enough candidates to fill all seats, the voter may also add additional names for each blank place on the list. The number of preference votes cast by the voter cannot exceed the number of seats available. If the voter does not use all available preference votes, additional votes are added to the list at large until the voter has cast the maximum number of votes. This is called a **Partial List** vote.
 * Choosing a blank list. In Switzerland and some other jurisdictions, the voter may choose a ballot paper without a party specification, and write down the names of candidates from different lists, up to the number of seats. No candidate's name may appear more than twice. If the voter does not exhaust their votes, no additional votes are added to any list, meaning this method risks undermining the value of the voter's ballot. This is called a **Free Vote**. 
 
+This repository includes a sandbox for learning how to write the vote expressions. In ``bin/``, use the ``miniparser.exe`` as follows:
+
+```bash
+$ miniparser "b|103,104,106,201"
+| List: 1   ALV: 0        | List: 2   ALV: 0
+| 1   | 101   | 0     |   | 1   | 201   | 1     |
+| 2   | 102   | 0     |   | 2   | 202   | 0     |
+| 3   | 103   | 1     |   | 3   | 203   | 0     |
+| 4   | 104   | 1     |   | 4   | 204   | 0     |
+| 5   | 105   | 0     |   | 5   | 205   | 0     |
+| 6   | 106   | 1     |   | 6   | 206   | 0     |
+```
+
+This example shows a free vote for candidates 103, 104, 106, and 201. The ``ALV`` at the top stands for "at-large votes", or votes that are cast for a party but not a particular candidate.
+
 [Click here](https://www.ch.ch/en/elections2023/electing-the-parliament/election-information-from-the-government/#video-explaining-the-voting-process) for resources from the Swiss Government on how to vote in Federal Elections. The videos and pdf guides are in German, French and Italian only.
 
 ## Party lists under Panachage.
