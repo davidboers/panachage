@@ -27,6 +27,7 @@ $ miniparser "b|103,104,106,201"
 | 4   | 104   | 1     |   | 4   | 204   | 0     |
 | 5   | 105   | 0     |   | 5   | 205   | 0     |
 | 6   | 106   | 1     |   | 6   | 206   | 0     |
+| Party total | 3     |   | Party total | 1     |
 ```
 
 This example shows a free vote for candidates 103, 104, 106, and 201. The ``ALV`` at the top stands for "at-large votes", or votes that are cast for a party but not a particular candidate.

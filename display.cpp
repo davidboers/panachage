@@ -6,6 +6,8 @@
 #include "partylist.cpp"
 #include "settings.h"
 
+#pragma once
+
 namespace panachage
 {
 
@@ -54,6 +56,14 @@ namespace panachage
                 }
                 printf("\n");
             }
+
+            for (int i = 0; i < row_length; i++)
+            {
+                partylist *list = row_lists[i];
+                printf("| %-11s | %-5i |", "Party total", list->totalVotes());
+                printf(margin.c_str());
+            }
+            printf("\n");
         }
     }
 
