@@ -7,11 +7,7 @@
 
 #include <stdlib.h>
 
-int yycolumn = 1;
-
-#define YY_MAX_CANDS 32
-#define YY_USER_ACTION yycolumn+=yyleng;
-
+#include "lex_utils.h"
 #include "votes.tab.h"
 
 %}
