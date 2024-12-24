@@ -16,8 +16,8 @@ void test_lrm(void)
 void test_ham(void)
 {
     ham_party parties[] = {
-        ham_party_new(613), // 65
-        ham_party_new(323), // 35
+        ham_party_new(613), // 66
+        ham_party_new(323), // 34
         ham_party_new(43),
         ham_party_new(13),
         ham_party_new(8)};
