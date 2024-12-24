@@ -1,0 +1,23 @@
+To vote for single list unamended:
+
+    f|1  
+
+Where "1" is the list id. 
+
+To vote for a list with some names struck out (partial list):
+
+    p|2|204,205,206
+
+To vote for a list with some names struck out and others added on:
+
+    p|2|204,205,206|101,105,106
+
+To cast a "free" or "blank" vote:
+
+    b|103,104,106,201
+
+Note that when using the command line, you may need to put your expressions in
+quotation marks, because otherwise the shell might think you are trying to use
+the pipe function:
+
+    miniparser "f|1"

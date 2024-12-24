@@ -8,6 +8,7 @@
 #ifndef JUST_PARTYLIST
 #include "votes_lexer.c"
 #include "votes.tab.c"
+#include "display.cpp"
 #endif
 #ifndef JUST_VOTES
 #include "partylist_lexer.c"
@@ -40,6 +41,38 @@ namespace panachage
         return votes;
     }
 
+    void parseSingleVote(const char *text, std::vector<partylist *> lists)
+    {
+        std::vector<Vote *> votes;
+        const char *temp_filename = "tempparsedoc.txt";
+        yyin = fopen(temp_filename, "w");
+        fputs(text, yyin);
+        fclose(yyin);
+        parseVoteFile(temp_filename, &votes, lists);
+        if (votes.size() == 0)
+        {
+            std::cout << "No (valid) votes could be parsed." << std::endl;
+        }
+        else if (votes.size() == 1)
+        {
+            Vote *vote = votes.front();
+            if (vote->validate())
+            {
+                vote->count(lists);
+                displayAllCandidates(lists);
+            }
+            else
+            {
+                std::cout << "That vote is invalid." << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "Try parsing again with only one vote." << std::endl;
+        }
+        remove(temp_filename);
+    }
+
 #endif
 #ifndef JUST_VOTES
 
@@ -49,7 +82,7 @@ namespace panachage
         yy_temp_plid = YY_DEFAULT_TEMP_PLID;
         yy_temp_alv = YY_DEFAULT_TEMP_ALV;
         yyin = fopen(filename, "r");
-        partylist* pl;
+        partylist *pl;
         if (!yy_doesFileExist(filename))
             return pl;
         plparse(filename, pl);
