@@ -32,9 +32,9 @@ namespace panachage
             }
         }
 
-        void newCandidate(const candidate::id_type cand_id)
+        void newCandidate(const candidate::id_type cand_id, const int votes = 0)
         {
-            this->candidate_votes[cand_id] = 0;
+            this->candidate_votes[cand_id] = votes;
         }
 
         std::vector<candidate::id_type> candidateList()
