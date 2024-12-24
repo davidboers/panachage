@@ -5,28 +5,58 @@
 #include "vote.hpp"
 #include "partylist.cpp"
 
-#include "lex.yy.c"
-#include "y.tab.c"
-
-extern FILE *yyin;
-extern int yyparse(const char *, panachage::yy_votes_param, panachage::yy_lists_param);
+#ifndef JUST_PARTYLIST
+#include "votes_lexer.c"
+#include "votes.tab.c"
+#endif
+#ifndef JUST_VOTES
+#include "partylist_lexer.c"
+#include "partylist.tab.c"
+#endif
 
 namespace panachage
 {
 
-    std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists)
+    bool yy_doesFileExist(const char *filename)
     {
-        yyin = fopen(filename, "r");
         if (!yyin)
         {
             fclose(yyin);
             std::cout << filename << " does not exist." << std::endl;
-            return votes;
+            return false;
         }
+        return true;
+    }
 
-        yyparse(filename, votes, lists);
+#ifndef JUST_PARTYLIST
+
+    std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists)
+    {
+        yyin = fopen(filename, "r");
+        if (!yy_doesFileExist(filename))
+            return votes;
+        vparse(filename, votes, lists);
         fclose(yyin);
         return votes;
     }
+
+#endif
+#ifndef JUST_VOTES
+
+    partylist *parsePartyListFile(const char *filename)
+    {
+        yy_temp_plname = YY_DEFAULT_TEMP_PLNAME;
+        yy_temp_plid = YY_DEFAULT_TEMP_PLID;
+        yy_temp_alv = YY_DEFAULT_TEMP_ALV;
+        yyin = fopen(filename, "r");
+        partylist* pl;
+        if (!yy_doesFileExist(filename))
+            return pl;
+        plparse(filename, pl);
+        fclose(yyin);
+        return pl;
+    }
+
+#endif
 
 }

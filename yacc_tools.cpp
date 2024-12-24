@@ -10,12 +10,6 @@
 #include "partial_list.cpp"
 #include "free_list.cpp"
 
-#define YY_NEWLINE yycolumn = 1;
-
-#ifndef YY_MAX_CANDS
-#define YY_MAX_CANDS 32
-#endif
-
 namespace panachage
 {
 
@@ -63,7 +57,7 @@ namespace panachage
 
 }
 
-void yyerror(const char *filename, panachage::yy_votes_param votes, panachage::yy_lists_param lists, char const *s)
+void yacc_error(const char *filename, char const *s, const char *t)
 {
     extern int yylineno;
     extern int yycolumn;
@@ -79,13 +73,13 @@ void yyerror(const char *filename, panachage::yy_votes_param votes, panachage::y
             *lb = 0;
     }
 
-    printf("Error parsing vote file:\n");
+    printf("Error parsing %s file:\n", t);
     printf("%s:%i:%i: %s\n", filename, yylineno, yycolumn, s);
     printf("%i: %s\n", yylineno, expr);
 
     const int num_wspc = 2 + std::to_string(yylineno).length() + (yycolumn - 1);
     std::string lead_wspc(num_wspc, ' ');
-    printf("%s^\n", lead_wspc.c_str());
+    printf("%s^\n", lead_wspc.c_str()); // too many whitespaces
 
     printf("Char dumps (yytext): ");
     char h;
@@ -96,3 +90,16 @@ void yyerror(const char *filename, panachage::yy_votes_param votes, panachage::y
     }
     printf("\n");
 }
+
+#ifndef JUST_PARTYLIST
+inline void verror(const char *filename, panachage::yy_votes_param votes, panachage::yy_lists_param lists, char const *s)
+{
+    yacc_error(filename, s, "vote");
+}
+#endif
+#ifndef JUST_VOTES
+inline void plerror(const char *filename, panachage::partylist *pl, char const *s)
+{
+    yacc_error(filename, s, "party list");
+}
+#endif

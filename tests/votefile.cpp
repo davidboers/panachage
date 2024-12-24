@@ -2,6 +2,8 @@
 
 #include "templates.hpp"
 
+#define JUST_VOTES
+
 #include "../parse_file.cpp"
 #include "../display.cpp"
 
