@@ -1,5 +1,6 @@
 // bison -dy votes.y -b votes
 
+%define api.prefix {v}
 %parse-param {const char* filename}
 %parse-param {std::vector<panachage::Vote*>* votes}
 %parse-param {std::vector<panachage::partylist*> lists}
