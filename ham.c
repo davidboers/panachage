@@ -22,7 +22,7 @@ typedef double (*__quotient_func)(ham_party);
 
 double dhondt(ham_party p)
 {
-    return p.votes / (double)p.seats;
+    return p.votes / (double)(p.seats + 1);
 }
 
 double sainte_laguë(ham_party p)
