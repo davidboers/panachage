@@ -2,30 +2,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct
-{
-    int votes;
-    int seats;
-} ham_party;
-
-ham_party ham_party_new(int votes)
-{
-    ham_party p;
-    p.votes = votes;
-    p.seats = 0;
-    return p;
-}
+#include "seat_alloc_utils.c"
 
 // Quotient functions
 
-typedef double (*__quotient_func)(ham_party);
+typedef double (*__quotient_func)(party);
 
-double dhondt(ham_party p)
+double dhondt(party p)
 {
     return p.votes / (double)(p.seats + 1);
 }
 
-double sainte_laguë(ham_party p)
+double sainte_laguë(party p)
 {
     return p.votes / (double)(2 * p.seats + 1);
 }
@@ -34,66 +22,34 @@ static __quotient_func __qf;
 
 // Procedure
 
-int comp(const void *elem1, const void *elem2)
+void ham(const int partyc, party parties[partyc], int seats, __quotient_func method)
 {
-    double i = __qf(*((ham_party *)elem1));
-    double j = __qf(*((ham_party *)elem2));
-    return (i > j) ? -1 : (i < j) ? 1
-                                  : 0;
-}
-
-void ham(const int partyc, ham_party parties[partyc], int seats, __quotient_func method)
-{
-    __qf = method;
-    ham_party *p;
+    auto int comp();
+    party *p;
     for (int i = 0; i < seats; i++)
     {
-        qsort(parties, partyc, sizeof(ham_party), comp);
+        qsort(parties, partyc, sizeof(party), comp);
         p = parties;
         p->seats++;
     }
-}
 
-// Threshold
-
-int total_votes(const int partyc, ham_party parties[partyc])
-{
-    int tv = 0;
-    for (int i = 0; i < partyc; i++)
+    int comp(const void *elem1, const void *elem2)
     {
-        ham_party p = parties[i];
-        tv += p.votes;
+        double i = method(*((party *)elem1));
+        double j = method(*((party *)elem2));
+        return (i > j) ? -1 : (i < j) ? 1
+                                      : 0;
     }
-    return tv;
-}
-
-int threshold(const int partyc, ham_party parties[partyc], double pct)
-{
-    int tv = total_votes(partyc, parties);
-    int th = floor(tv * pct);
-    ham_party filtered[partyc];
-    int new_size = 0;
-    for (int i = 0; i < partyc; i++)
-    {
-        ham_party p = parties[i];
-        if (p.votes >= th)
-        {
-            *filtered = p;
-            new_size++;
-        }
-    }
-    parties = filtered;
-    return new_size;
 }
 
 // Display
 
-void ham_print_table(const int partyc, ham_party parties[partyc])
+void ham_print_table(const int partyc, party parties[partyc])
 {
     int total_seats = 0;
     for (int i = 0; i < partyc; i++)
     {
-        ham_party p = parties[i];
+        party p = parties[i];
         printf("| %-8i | %-3i |\n", p.votes, p.seats);
         total_seats += p.seats;
     }
