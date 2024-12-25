@@ -1,6 +1,6 @@
 .id=5
 .avl = 4793
 begin
-#501@Vogt Ado+1’132
+#501@Vogt Ado+1132
 #502@Schurti Pio+847
 #503@Ott Gregor+598
