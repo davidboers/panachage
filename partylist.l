@@ -24,9 +24,10 @@
 "begin"           { return init_cmd;  }
 " = "             { return assign;    }
 
+[0-9]+            { YY_MAKE_INT       }
+[ \t]             ;
 [\n\r]            { yycolumn = 1;     }
 <<EOF>>           { yyterminate();    }
-[0-9]+            { YY_MAKE_INT       }
 .                 { YY_MAKE_TEXT      }
 
 %%
