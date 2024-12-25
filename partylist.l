@@ -22,7 +22,7 @@
 ".at_large_votes" { return opt_alv;   }
 ".alv"            { return opt_alv;   }
 "begin"           { return init_cmd;  }
-" = "             { return assign;    }
+"="               { return assign;    }
 
 [0-9]+            { YY_MAKE_INT       }
 [ \t]             ;
