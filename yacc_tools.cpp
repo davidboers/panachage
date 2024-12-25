@@ -79,14 +79,22 @@ void yacc_error(const char *filename, char const *s, const char *t)
 
     const int num_wspc = 2 + std::to_string(yylineno).length() + (yycolumn - 1);
     std::string lead_wspc(num_wspc, ' ');
-    printf("%s^\n", lead_wspc.c_str()); // too many whitespaces
+    printf("%s^\n", lead_wspc.c_str());
 
     printf("Char dumps (yytext): ");
     char h;
     while (*yytext)
     {
         h = *yytext++;
-        printf("%i ", h);
+        printf("%i", h);
+        if (h >= ' ' && h <= '~')
+        {
+            printf("(%c) ", h);
+        }
+        else
+        {
+            printf(" ");
+        }
     }
     printf("\n");
 }
