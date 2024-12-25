@@ -18,8 +18,6 @@ double sainte_laguë(party p)
     return p.votes / (double)(2 * p.seats + 1);
 }
 
-static __quotient_func __qf;
-
 // Procedure
 
 void ham(const int partyc, party parties[partyc], int seats, __quotient_func method)
