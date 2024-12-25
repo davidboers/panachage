@@ -1,5 +1,5 @@
 .id = 3
-.avl = 8250
+.alv = 8250
 begin
 #301@Kaufmann Georg+1757
 #302@Haldner-Schierscher Manuela+1597
