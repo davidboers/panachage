@@ -6,7 +6,8 @@
 
 %{
 
-#include "yacc_tools.cpp"
+#include "yacc_tools.c"
+
 #include "partylist.cpp"
 
 #define YY_DEFAULT_TEMP_PLNAME ""
@@ -16,6 +17,11 @@
 static std::string yy_temp_plname = YY_DEFAULT_TEMP_PLNAME;
 static panachage::partylist::id_type yy_temp_plid = YY_DEFAULT_TEMP_PLID;
 static int yy_temp_alv = YY_DEFAULT_TEMP_ALV;
+
+inline void plerror(const char *filename, panachage::partylist *pl, char const *s)
+{
+    yacc_error(filename, s, "party list");
+}
 
 %}
 

@@ -9,11 +9,63 @@
 
 #include <vector>
 
-#include "yacc_tools.cpp"
+#include "yacc_tools.c"
 
-using panachage::yy_listById;
-using panachage::yy_lst_init;
-using panachage::yy_lst_append;
+#include "candidate.hpp"
+#include "full_list.cpp"
+#include "partial_list.cpp"
+#include "free_list.cpp"
+
+using panachage::partylist;
+using panachage::Vote;
+using panachage::candidate;
+
+typedef std::vector<Vote *> *yy_votes_param;
+typedef std::vector<partylist *> yy_lists_param;
+
+inline void verror(const char *filename, yy_votes_param votes, yy_lists_param lists, char const *s)
+{
+    yacc_error(filename, s, "vote");
+}
+
+partylist *yy_listById(yy_lists_param lists, partylist::id_type id)
+{
+      partylist *plist;
+      for (partylist *i : lists)
+      {
+      if (i->id == id)
+      {
+            plist = i;
+            break;
+      }
+      }
+
+      if (!plist)
+      {
+      printf("Warning: could not find partylist of id: %i\n", id);
+      exit(100);
+      }
+
+      return plist;
+}
+
+inline void yy_lst_init(candidate::id_type *cand_list, int id)
+{
+      *cand_list = id;
+}
+
+inline void yy_lst_append(candidate::id_type *cand_list, int id)
+{
+      // ew.
+      for (int i = 0; i < YY_MAX_CANDS; i++)
+      {
+      if (!cand_list[i])
+      {
+            cand_list[i] = id;
+            break;
+      }
+      }
+}
 
 %}
 
