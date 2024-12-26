@@ -13,11 +13,11 @@
 
 %%
 
-[0-9]+  { vlval.ival = std::atoi(yytext); return number; }
+[0-9]+  YY_MAKE_INT(vlval.i)
 [ \t]   ;
 #.*     ;
-[\n\r]  { yycolumn = 1;     }
-<<EOF>> { yyterminate();    }
-.       { return yytext[0]; }
+[\n\r]  YY_RESET_COLUMN
+<<EOF>> YY_END_FILE
+.       YY_MAKE_SELF
 
 %%
