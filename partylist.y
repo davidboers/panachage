@@ -10,11 +10,11 @@
 #include "yacc_tools.cpp"
 #include "partylist.cpp"
 
-#define YY_DEFAULT_TEMP_PLNAME nullptr
+#define YY_DEFAULT_TEMP_PLNAME ""
 #define YY_DEFAULT_TEMP_PLID 1
 #define YY_DEFAULT_TEMP_ALV 0
 
-static char* yy_temp_plname = YY_DEFAULT_TEMP_PLNAME;
+static std::string yy_temp_plname = YY_DEFAULT_TEMP_PLNAME;
 static panachage::partylist::id_type yy_temp_plid = YY_DEFAULT_TEMP_PLID;
 static int yy_temp_alv = YY_DEFAULT_TEMP_ALV;
 
