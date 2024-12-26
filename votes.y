@@ -18,10 +18,10 @@ using panachage::yy_lst_append;
 %}
 
 %union {
-      int ival;
-      panachage::Vote* vval;
-      panachage::candidate::id_type clval[YY_MAX_CANDS];
-      panachage::partylist* plval;
+      int i;
+      panachage::Vote* v;
+      panachage::candidate::id_type cl[YY_MAX_CANDS];
+      panachage::partylist* pl;
 }
 
 %token full 102    // f
@@ -32,7 +32,11 @@ using panachage::yy_lst_append;
 %token sep 124     // |
 %token numsep 44   // ,
 
-%token number
+%token <i> number
+
+%type <pl> partylist
+%type <v> vote
+%type <cl> numbers
 
 %start start
 
@@ -42,20 +46,20 @@ start : parcel
       | start parcel
       ;
 
-parcel : number star vote { $<vval>3->setCopies($<ival>1); votes->push_back($<vval>3); }
-       | vote             { votes->push_back($<vval>1);                                }
+parcel : number star vote { $3->setCopies($1); votes->push_back($3); }
+       | vote             { votes->push_back($1);                    }
        ;
 
-vote : full sep partylist                            { $<vval>$ = new panachage::FullListVote($<plval>3);                          }
-     | partial sep partylist sep numbers             { $<vval>$ = new panachage::PartialListVote($<plval>3, $<clval>5);            }
-     | partial sep partylist sep numbers sep numbers { $<vval>$ = new panachage::PartialListVote($<plval>3, $<clval>5, $<clval>7); }
-     | blank sep numbers                             { $<vval>$ = new panachage::FreeVote($<clval>3);                              }
+vote : full sep partylist                            { $$ = new panachage::FullListVote($3);            }
+     | partial sep partylist sep numbers             { $$ = new panachage::PartialListVote($3, $5);     }
+     | partial sep partylist sep numbers sep numbers { $$ = new panachage::PartialListVote($3, $5, $7); }
+     | blank sep numbers                             { $$ = new panachage::FreeVote($3);                }
      ;
 
-partylist : number { $<plval>$ = yy_listById(lists, $<ival>1); } ;
+partylist : number { $$ = yy_listById(lists, $1); } ;
 
-numbers : number                { yy_lst_init($<clval>$, $<ival>1);   }
-        | numbers numsep number { yy_lst_append($<clval>$, $<ival>3); }
+numbers : number                { yy_lst_init($$, $1);   }
+        | numbers numsep number { yy_lst_append($$, $3); }
         ;
 
 %%
