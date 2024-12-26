@@ -1,6 +1,5 @@
 // bison -dy partylist.y -b partylist
 
-%define api.value.type {char*}
 %define api.prefix {pl}
 %parse-param {const char* filename}
 %parse-param {panachage::partylist* pl}
@@ -20,19 +19,24 @@ static int yy_temp_alv = YY_DEFAULT_TEMP_ALV;
 
 %}
 
-%token pound '#'
-%token at '@'
-%token plus '+'
+%union {
+       char *s;
+       char c;
+       int i;
+}
+
+%type <s> string cand_name
+%type <i> cand_id cand_votes
 
 %token init_cmd
 
 %token opt_name
 %token opt_id
 %token opt_alv
-%token assign
 
-%token text1
-%token number
+%token <s> text
+
+%token <i> number
 
 %start start
 
@@ -46,9 +50,9 @@ options : option
         | options option
         ;
 
-option : opt_name assign string { yy_temp_plname = $3;          }
-       | opt_id assign number   { yy_temp_plid = std::atoi($3); }
-       | opt_alv assign number  { yy_temp_alv = std::atoi($3);  }
+option : opt_name '=' string { yy_temp_plname = $3; }
+       | opt_id '=' number   { yy_temp_plid = $3;   }
+       | opt_alv '=' number  { yy_temp_alv = $3;    }
        ;
 
 // Initiator
@@ -64,25 +68,20 @@ candidates : candidate
            | candidates candidate
            ;
 
-candidate : cand_id cand_name cand_votes { pl->newCandidate(std::atoi($1), std::atoi($3)); } 
-          | cand_id cand_votes           { pl->newCandidate(std::atoi($1), std::atoi($2)); } 
+candidate : cand_id cand_name cand_votes { pl->newCandidate($1, $3); } 
+          | cand_id cand_votes           { pl->newCandidate($1, $2); } 
           ;
 
-cand_id : pound number { $$ = $2; } ;
+cand_id : '#' number { $$ = $2; } ;
 
-cand_name : at string { $$ = $2; } ;
+cand_name : '@' text { $$ = $2; } ;
 
-cand_votes : plus number { $$ = $2; } ;
+cand_votes : '+' number { $$ = $2; } ;
 
 // Data types
 
 string : '\'' text '\'' { $$ = $2; }
        | '\"' text '\"' { $$ = $2; }
-       | text           { $$ = $1; }
        ;
-
-text : text1      { $$ = $1;                 }
-     | text text1 { std::strncat($1, $2, 1); }
-     ;
 
 %%

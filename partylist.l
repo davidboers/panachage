@@ -9,8 +9,9 @@
 #include "lex_utils.h"
 #include "partylist.tab.h"
 
-#define YY_MAKE_INT pllval=yytext;return number;
-#define YY_MAKE_TEXT pllval=yytext;return text1;
+#define YY_MAKE_INT pllval.i=std::atoi(yytext);return number;
+#define YY_MAKE_TEXT pllval.s=yytext;return text;
+#define YY_MAKE_SELF return yytext[0];
 
 %}
 
@@ -22,12 +23,12 @@
 ".at_large_votes" { return opt_alv;   }
 ".alv"            { return opt_alv;   }
 "begin"           { return init_cmd;  }
-"="               { return assign;    }
 
 [0-9]+            { YY_MAKE_INT       }
 [ \t]             ;
 [\n\r]            { yycolumn = 1;     }
 <<EOF>>           { yyterminate();    }
-.                 { YY_MAKE_TEXT      }
+[a-zA-Z ]+        { YY_MAKE_TEXT      }
+.                 YY_MAKE_SELF
 
 %%
