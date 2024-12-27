@@ -69,6 +69,8 @@ inline void yy_lst_append(candidate::id_type *cand_list, int id)
 
 %}
 
+%define parse.error verbose
+
 %union {
       int i;
       panachage::Vote* v;

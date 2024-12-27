@@ -25,6 +25,8 @@ inline void plerror(const char *filename, panachage::partylist *pl, char const *
 
 %}
 
+%define parse.error verbose
+
 %union {
        char *s;
        char c;
