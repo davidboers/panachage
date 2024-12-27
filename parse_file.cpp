@@ -36,6 +36,15 @@ namespace panachage
         YY_FLUSH_BUFFER;
     }
 
+    void sanitize_path(char *path)
+    {
+        char *filename = strrchr(path, '/');
+        if (filename)
+        {
+            memmove(path, filename + 1, strlen(filename));
+        }
+    }
+
 #ifndef JUST_PARTYLIST
 
     std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists)
@@ -84,13 +93,25 @@ namespace panachage
 #endif
 #ifndef JUST_VOTES
 
+    std::string nameFromFile(const char *filename, const char *ext = ".txt")
+    {
+        char name[strlen(filename)];
+        strcpy(name, filename);
+        sanitize_path(name);
+        if (strstr(filename, ext))
+        {
+            int dot_index = strlen(name) - strlen(ext);
+            name[dot_index] = 0;
+        }
+        return std::string(name);
+    }
+
     partylist parsePartyListFile(const char *filename, const char *ext = ".txt")
     {
         yy_temp_plid = YY_DEFAULT_TEMP_PLID;
         yy_temp_alv = YY_DEFAULT_TEMP_ALV;
-        yy_temp_plname = std::string(filename);
-        const int name_len = strlen(filename) - strlen(ext);
-        yy_temp_plname = yy_temp_plname.substr(0, name_len);
+        yy_temp_plname = YY_DEFAULT_TEMP_PLNAME;
+        yy_temp_plname = nameFromFile(filename, ext);
         reset_buffer();
         yyin = fopen(filename, "r");
         partylist pl;
