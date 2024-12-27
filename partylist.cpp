@@ -15,10 +15,12 @@ namespace panachage
     public:
         typedef unsigned int id_type;
 
-        const id_type id;
-        const std::string name;
+        id_type id;
+        std::string name;
         int at_large_votes;
         std::map<candidate::id_type, int> candidate_votes;
+
+        inline partylist() {}
 
         partylist(const partylist::id_type id,
                   const std::string name,
