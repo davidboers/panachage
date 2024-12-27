@@ -14,7 +14,7 @@ party party_new(int votes)
     return p;
 }
 
-int total_valid_poll(const int partyc, party parties[partyc])
+int total_valid_poll(const int partyc, party *parties)
 {
     int tvp = 0;
     for (int i = 0; i < partyc; i++)
@@ -24,7 +24,7 @@ int total_valid_poll(const int partyc, party parties[partyc])
     return tvp;
 }
 
-int threshold(const int partyc, party parties[partyc], double pct)
+int threshold(const int partyc, party *parties, double pct)
 {
     int tv = total_valid_poll(partyc, parties);
     int th = floor(tv * pct);
