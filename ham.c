@@ -2,11 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "seat_alloc_utils.c"
+#include "ham.h"
 
 // Quotient functions
-
-typedef double (*__quotient_func)(party);
 
 double dhondt(party p)
 {
@@ -20,7 +18,7 @@ double sainte_laguë(party p)
 
 // Procedure
 
-void ham(const int partyc, party parties[partyc], int seats, __quotient_func method)
+void ham(const int partyc, party *parties, int seats, __quotient_func method)
 {
     auto int comp();
     party *p;
@@ -42,7 +40,7 @@ void ham(const int partyc, party parties[partyc], int seats, __quotient_func met
 
 // Display
 
-void ham_print_table(const int partyc, party parties[partyc])
+void ham_print_table(const int partyc, party *parties)
 {
     int total_seats = 0;
     for (int i = 0; i < partyc; i++)
