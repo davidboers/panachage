@@ -84,7 +84,7 @@ namespace panachage
 #endif
 #ifndef JUST_VOTES
 
-    partylist *parsePartyListFile(const char *filename, const char *ext = ".txt")
+    partylist parsePartyListFile(const char *filename, const char *ext = ".txt")
     {
         yy_temp_plid = YY_DEFAULT_TEMP_PLID;
         yy_temp_alv = YY_DEFAULT_TEMP_ALV;
@@ -93,7 +93,7 @@ namespace panachage
         yy_temp_plname = yy_temp_plname.substr(0, name_len);
         reset_buffer();
         yyin = fopen(filename, "r");
-        partylist *pl;
+        partylist pl;
         if (!yy_doesFileExist(filename))
             return pl;
         plparse(filename, pl);

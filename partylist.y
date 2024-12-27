@@ -2,7 +2,7 @@
 
 %define api.prefix {pl}
 %parse-param {const char* filename}
-%parse-param {panachage::partylist* pl}
+%parse-param {panachage::partylist& pl}
 
 %{
 
@@ -18,7 +18,7 @@ static std::string yy_temp_plname = YY_DEFAULT_TEMP_PLNAME;
 static panachage::partylist::id_type yy_temp_plid = YY_DEFAULT_TEMP_PLID;
 static int yy_temp_alv = YY_DEFAULT_TEMP_ALV;
 
-inline void plerror(const char *filename, panachage::partylist *pl, char const *s)
+inline void plerror(const char *filename, panachage::partylist &pl, char const *s)
 {
     yacc_error(filename, s, "party list");
 }
@@ -65,8 +65,8 @@ option : opt_name '=' text   { yy_temp_plname = $3; }
 
 // Initiator
 
-init : init_cmd { pl = new panachage::partylist(yy_temp_plid, yy_temp_plname); 
-                  pl->at_large_votes = yy_temp_alv;
+init : init_cmd { pl = panachage::partylist(yy_temp_plid, yy_temp_plname); 
+                  pl.at_large_votes = yy_temp_alv;
                 } 
                 ;
 
@@ -76,8 +76,8 @@ candidates : candidate
            | candidates candidate
            ;
 
-candidate : cand_id cand_name cand_votes { pl->newCandidate($1, $3); } 
-          | cand_id cand_votes           { pl->newCandidate($1, $2); } 
+candidate : cand_id cand_name cand_votes { pl.newCandidate($1, $3); } 
+          | cand_id cand_votes           { pl.newCandidate($1, $2); } 
           ;
 
 cand_id : '#' number { $$ = $2; } ;
