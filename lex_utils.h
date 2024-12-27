@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <string.h>
 
 int yycolumn = 1;
 
@@ -17,3 +18,18 @@ int yycolumn = 1;
 #define YY_RESET_COLUMN yycolumn = 1;
 
 #define YY_END_FILE yyterminate();
+
+#define YY_ALLOC_VAL_MEM (char *)malloc(yyleng)
+
+void handle_anything_q(char *dest, char *buffer)
+{
+    const size_t len = strlen(buffer);
+    memmove(dest, buffer + 1, len - 1);
+    dest[len - 2] = 0;
+}
+
+void handle_anything_a(char *dest, char *buffer)
+{
+    const size_t len = strlen(buffer);
+    memmove(dest, buffer + 1, len - 1);
+}

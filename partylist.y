@@ -33,7 +33,6 @@ inline void plerror(const char *filename, panachage::partylist *pl, char const *
        int i;
 }
 
-%type <s> cand_name
 %type <i> cand_id cand_votes
 
 %token init_cmd
@@ -41,6 +40,8 @@ inline void plerror(const char *filename, panachage::partylist *pl, char const *
 %token opt_name
 %token opt_id
 %token opt_alv
+
+%token <s> cand_name
 
 %token <s> text
 %token <i> number
@@ -80,8 +81,6 @@ candidate : cand_id cand_name cand_votes { pl->newCandidate($1, $3); }
           ;
 
 cand_id : '#' number { $$ = $2; } ;
-
-cand_name : '@' text { $$ = $2; } ;
 
 cand_votes : '+' number { $$ = $2; } ;
 
