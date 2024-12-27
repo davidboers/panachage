@@ -3,6 +3,9 @@
 *.o
 *.a
 
+sandbox.*
+sandbox1.*
+
 *_lexer.c
 *.tab.c
 *.tab.h
