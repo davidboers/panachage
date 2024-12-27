@@ -3,6 +3,23 @@ Full Liechtenstein test.
 Oberland Constituency
 2021 Election
 https://www.landtagswahlen.li/resultat/12//12
+
+   vu 101
+   vu 102
+   vu 103
+   vu 104
+   vu 105
+   vu 106
+  fbp 201
+  fbp 202
+  fbp 203
+  fbp 204
+  fbp 205
+  fbp 206
+   fl 301
+   fl 302
+  dpl 401
+
 */
 
 #define NOMAIN
