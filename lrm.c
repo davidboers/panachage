@@ -6,19 +6,19 @@
 
 // Quota functions
 
-double hare(const int partyc, party parties[partyc], int seats)
+double hare(const int partyc, party *parties, int seats)
 {
     return floor(total_valid_poll(partyc, parties) / (double)seats);
 }
 
-double droop(const int partyc, party parties[partyc], int seats)
+double droop(const int partyc, party *parties, int seats)
 {
     return floor(total_valid_poll(partyc, parties) / (double)(seats + 1)) + 1;
 }
 
 // Procedure
 
-void lrm(const int partyc, party parties[partyc], int seats)
+void lrm(const int partyc, party *parties, int seats)
 {
     double quota = hare(partyc, parties, seats);
     auto int comp_residual();
@@ -50,7 +50,7 @@ void lrm(const int partyc, party parties[partyc], int seats)
 
 // Display
 
-void lrm_print_table(const int partyc, party parties[partyc])
+void lrm_print_table(const int partyc, party *parties)
 {
     for (int i = 0; i < partyc; i++)
     {
