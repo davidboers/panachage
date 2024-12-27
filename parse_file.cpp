@@ -29,10 +29,18 @@ namespace panachage
         return true;
     }
 
+    void reset_buffer()
+    {
+        yylineno = 1;
+        yycolumn = 1;
+        YY_FLUSH_BUFFER;
+    }
+
 #ifndef JUST_PARTYLIST
 
     std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists)
     {
+        reset_buffer();
         yyin = fopen(filename, "r");
         if (!yy_doesFileExist(filename))
             return votes;
@@ -83,8 +91,7 @@ namespace panachage
         yy_temp_plname = std::string(filename);
         const int name_len = strlen(filename) - strlen(ext);
         yy_temp_plname = yy_temp_plname.substr(0, name_len);
-        yylineno = 1;
-        yycolumn = 1;
+        reset_buffer();
         yyin = fopen(filename, "r");
         partylist *pl;
         if (!yy_doesFileExist(filename))
