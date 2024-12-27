@@ -13,6 +13,8 @@
 
 %}
 
+anything          .*
+
 %%
 
 ".name"           return opt_name;
@@ -26,7 +28,8 @@
 [ \t]             ;
 [\n\r]            YY_RESET_COLUMN
 <<EOF>>           YY_END_FILE
-[a-zA-Z ]+        YY_MAKE_TEXT
+\"{anything}\"    YY_MAKE_TEXT
+\'{anything}\'    YY_MAKE_TEXT
 .                 YY_MAKE_SELF
 
 %%

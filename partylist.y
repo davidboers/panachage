@@ -33,7 +33,7 @@ inline void plerror(const char *filename, panachage::partylist *pl, char const *
        int i;
 }
 
-%type <s> string cand_name
+%type <s> cand_name
 %type <i> cand_id cand_votes
 
 %token init_cmd
@@ -43,7 +43,6 @@ inline void plerror(const char *filename, panachage::partylist *pl, char const *
 %token opt_alv
 
 %token <s> text
-
 %token <i> number
 
 %start start
@@ -58,7 +57,7 @@ options : option
         | options option
         ;
 
-option : opt_name '=' string { yy_temp_plname = $3; }
+option : opt_name '=' text   { yy_temp_plname = $3; }
        | opt_id '=' number   { yy_temp_plid = $3;   }
        | opt_alv '=' number  { yy_temp_alv = $3;    }
        ;
@@ -85,11 +84,5 @@ cand_id : '#' number { $$ = $2; } ;
 cand_name : '@' text { $$ = $2; } ;
 
 cand_votes : '+' number { $$ = $2; } ;
-
-// Data types
-
-string : '\'' text '\'' { $$ = $2; }
-       | '\"' text '\"' { $$ = $2; }
-       ;
 
 %%
