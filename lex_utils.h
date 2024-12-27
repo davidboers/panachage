@@ -8,8 +8,8 @@ int yycolumn = 1;
 
 #define YY_USER_ACTION yycolumn += yyleng;
 
-#define YY_MAKE_INT(intval)     \
-    intval = std::atoi(yytext); \
+#define YY_MAKE_INT(intval) \
+    intval = atoi(yytext);  \
     return number;
 
 #define YY_MAKE_SELF return yytext[0];
