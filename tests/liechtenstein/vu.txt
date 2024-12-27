@@ -1,5 +1,5 @@
 .name = "vu"
-.at-large-votes = 12480
+.at-large-votes = 9404
 .id = 1
 begin
 #101@Kaufmann Manfred+4117
