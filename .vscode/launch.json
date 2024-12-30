@@ -1,0 +1,65 @@
+{
+  "configurations": [
+    {
+      "name": "Debug miniparser",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/miniparser.exe",
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/bin",
+      "args": ["p|2|204,205,206"],
+      "MIMode": "gdb",
+      "preLaunchTask": "Compile miniparser"
+    },
+    {
+      "name": "Debug vote file",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/tests/votefile.exe",
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/tests",
+      "MIMode": "gdb",
+      "preLaunchTask": "Compile votefile"
+    },
+    {
+      "name": "Debug partylist file",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/tests/partylistfile.exe",
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/tests",
+      "MIMode": "gdb",
+      "preLaunchTask": "Compile partylistfile"
+    },
+    {
+      "name": "Debug votes test",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/tests/votes.exe",
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/tests",
+      "MIMode": "gdb",
+      "preLaunchTask": "Compile votes test"
+    },
+    {
+      "name": "Debug Liechtenstein test",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/tests/liechtenstein.exe",
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/tests",
+      "MIMode": "gdb",
+      "preLaunchTask": "Compile Liechtenstein test"
+    },
+    {
+      "name": "Debug alloc_seats",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/tests/alloc_seats.exe",
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/tests",
+      "MIMode": "gdb",
+      "preLaunchTask": "Compile alloc_seats test"
+    }
+  ]
+}
