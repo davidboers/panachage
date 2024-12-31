@@ -7,7 +7,6 @@
 
 namespace panachage
 {
-
     class PartialListVote : public Vote
     {
         partylist *plist;
@@ -83,6 +82,30 @@ namespace panachage
             }
 
             return true;
+        }
+
+        inline bool operator<(const Vote &vote) const
+        {
+            const PartialListVote *f = dynamic_cast<const PartialListVote *>(&vote);
+            if (!f)
+                return true;
+            return this->plist->id < f->plist->id ||
+                   this->struckthrough < f->struckthrough ||
+                   this->added < f->added;
+        }
+
+        std::string encode() const
+        {
+            std::string c = copies == 1 ? "" : std::to_string(copies) + "*";
+            std::string lid = std::to_string(plist->id);
+            std::string s = std::accumulate(struckthrough.begin(), struckthrough.end(), std::string(),
+                                            [](std::string a, candidate::id_type b)
+                                            { return a + std::to_string(b) + ","; });
+            std::string a = std::accumulate(added.begin(), added.end(), std::string(), [](std::string a, candidate::id_type b)
+                                            { return a + std::to_string(b) + ","; });
+            s.pop_back();
+            a.pop_back();
+            return c + "p|" + lid + "|" + s + "|" + a;
         }
 
         inline PartialListVote(partylist *plist,

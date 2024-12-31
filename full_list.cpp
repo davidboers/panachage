@@ -6,7 +6,6 @@
 
 namespace panachage
 {
-
     class FullListVote : public Vote
     {
         partylist *plist;
@@ -26,6 +25,19 @@ namespace panachage
         inline bool validate()
         {
             return true;
+        }
+
+        inline bool operator<(const Vote &vote) const
+        {
+            const FullListVote *f = dynamic_cast<const FullListVote *>(&vote);
+            if (!f)
+                return true;
+            return this->plist->id < f->plist->id;
+        }
+
+        inline std::string encode() const
+        {
+            return (copies == 1 ? "" : std::to_string(copies) + "*") + "f|" + std::to_string(plist->id);
         }
 
         inline FullListVote(partylist *plist) : plist(plist) {}

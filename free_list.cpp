@@ -7,7 +7,6 @@
 
 namespace panachage
 {
-
     class FreeVote : public Vote
     {
         std::vector<candidate::id_type> votes;
@@ -31,6 +30,24 @@ namespace panachage
         inline bool validate()
         {
             return votes.size() <= seats;
+        }
+
+        inline bool operator<(const Vote &vote) const
+        {
+            const FreeVote *f = dynamic_cast<const FreeVote *>(&vote);
+            if (!f)
+                return true;
+            return this->votes < f->votes;
+        }
+
+        std::string encode() const
+        {
+            std::string c = copies == 1 ? "" : std::to_string(copies) + "*";
+            std::string v = std::accumulate(votes.begin(), votes.end(), std::string(),
+                                            [](std::string a, candidate::id_type b)
+                                            { return a + std::to_string(b) + ","; });
+            v.pop_back();
+            return c + "b|" + v;
         }
 
         inline FreeVote(std::vector<candidate::id_type> votes) : votes(votes) {}
