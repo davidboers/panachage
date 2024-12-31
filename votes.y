@@ -92,6 +92,12 @@ inline void make_new_vote(yy_votes_param votes, Vote *v)
 
 %}
 
+%code requires {
+#include "vote.hpp"
+#include "partylist.cpp"
+#include "display.cpp"
+}
+
 %define parse.error verbose
 
 %union {
@@ -140,3 +146,50 @@ numbers : number                { yy_lst_init($$, $1);   }
         ;
 
 %%
+
+namespace panachage {
+
+std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists, bool create_new_lists = false)
+{
+      reset_buffer();
+      yyin = fopen(filename, "r");
+      if (!yy_doesFileExist(filename))
+            return votes;
+      vparse(filename, votes, lists, create_new_lists);
+      fclose(yyin);
+      return votes;
+}
+
+void parseSingleVote(const char *input, std::vector<partylist *> lists)
+{
+      std::vector<Vote *> votes;
+      const char *temp_filename = "tempparsedoc.txt";
+      yyin = fopen(temp_filename, "w");
+      fputs(input, yyin);
+      fclose(yyin);
+      parseVoteFile(temp_filename, &votes, lists);
+      if (votes.size() == 0)
+      {
+            std::cout << "No (valid) votes could be parsed." << std::endl;
+      }
+      else if (votes.size() == 1)
+      {
+            Vote *vote = votes.front();
+            if (vote->validate())
+            {
+                  vote->count(lists);
+                  displayAllCandidates(lists);
+            }
+            else
+            {
+                  std::cout << "That vote is invalid." << std::endl;
+            }
+      }
+      else
+      {
+            std::cout << "Try parsing again with only one vote." << std::endl;
+      }
+      remove(temp_filename);
+}
+
+}

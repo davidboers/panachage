@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
 extern int yylineno;
 extern int yycolumn;
@@ -76,4 +78,31 @@ void yacc_error(const char *filename, char const *s, const char *t)
         }
     }
     printf("\n");
+}
+
+bool yy_doesFileExist(const char *filename)
+{
+    if (!yyin)
+    {
+        fclose(yyin);
+        printf("%s does not exist.\n", filename);
+        return false;
+    }
+    return true;
+}
+
+void reset_buffer()
+{
+    yylineno = 1;
+    yycolumn = 1;
+    YY_FLUSH_BUFFER;
+}
+
+void sanitize_path(char *path)
+{
+    char *filename = strrchr(path, '/');
+    if (filename)
+    {
+        memmove(path, filename + 1, strlen(filename));
+    }
 }

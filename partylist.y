@@ -25,6 +25,11 @@ inline void plerror(const char *filename, panachage::partylist &pl, char const *
 
 %}
 
+%code requires {
+#include "vote.hpp"
+#include "partylist.cpp"
+}
+
 %define parse.error verbose
 
 %union {
@@ -85,3 +90,36 @@ cand_id : '#' number { $$ = $2; } ;
 cand_votes : '+' number { $$ = $2; } ;
 
 %%
+
+namespace panachage {
+
+std::string nameFromFile(const char *filename, const char *ext = ".txt")
+{
+       char name[strlen(filename)];
+       strcpy(name, filename);
+       sanitize_path(name);
+       if (strstr(filename, ext))
+       {
+              int dot_index = strlen(name) - strlen(ext);
+              name[dot_index] = 0;
+       }
+       return std::string(name);
+}
+
+partylist parsePartyListFile(const char *filename, const char *ext = ".txt")
+{
+       yy_temp_plid = YY_DEFAULT_TEMP_PLID;
+       yy_temp_alv = YY_DEFAULT_TEMP_ALV;
+       yy_temp_plname = YY_DEFAULT_TEMP_PLNAME;
+       yy_temp_plname = nameFromFile(filename, ext);
+       reset_buffer();
+       yyin = fopen(filename, "r");
+       partylist pl;
+       if (!yy_doesFileExist(filename))
+       return pl;
+       plparse(filename, pl);
+       fclose(yyin);
+       return pl;
+}
+
+}
