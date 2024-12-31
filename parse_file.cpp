@@ -17,7 +17,6 @@
 
 namespace panachage
 {
-
     bool yy_doesFileExist(const char *filename)
     {
         if (!yyin)
@@ -47,13 +46,13 @@ namespace panachage
 
 #ifndef JUST_PARTYLIST
 
-    std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists)
+    std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists, bool create_new_lists = false)
     {
         reset_buffer();
         yyin = fopen(filename, "r");
         if (!yy_doesFileExist(filename))
             return votes;
-        vparse(filename, votes, lists);
+        vparse(filename, votes, lists, create_new_lists);
         fclose(yyin);
         return votes;
     }
