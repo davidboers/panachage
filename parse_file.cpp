@@ -57,12 +57,12 @@ namespace panachage
         return votes;
     }
 
-    void parseSingleVote(const char *text, std::vector<partylist *> lists)
+    void parseSingleVote(const char *input, std::vector<partylist *> lists)
     {
         std::vector<Vote *> votes;
         const char *temp_filename = "tempparsedoc.txt";
         yyin = fopen(temp_filename, "w");
-        fputs(text, yyin);
+        fputs(input, yyin);
         fclose(yyin);
         parseVoteFile(temp_filename, &votes, lists);
         if (votes.size() == 0)
