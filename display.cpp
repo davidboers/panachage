@@ -64,6 +64,11 @@ namespace panachage
                 printf(margin.c_str());
             }
             printf("\n");
+
+            if (row != rows - 1)
+            {
+                printf("\n");
+            }
         }
     }
 
