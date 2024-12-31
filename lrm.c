@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "lrm.h"
+#include "seat_alloc_utils.c"
 
 // Quota functions
 

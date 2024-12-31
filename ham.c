@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "ham.h"
+#include "seat_alloc_utils.c"
 
 // Quotient functions
 

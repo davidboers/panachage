@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "candidate.hpp"
-#include "seat_alloc_utils.c"
+#include "seat_alloc_utils.h"
 
 #pragma once
 

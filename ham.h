@@ -1,4 +1,4 @@
-#include "seat_alloc_utils.c"
+#include "seat_alloc_utils.h"
 
 #ifdef __cplusplus
 extern "C"

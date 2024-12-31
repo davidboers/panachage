@@ -1,15 +1,6 @@
 #pragma once
 
-#ifndef party_id_type
-#define party_id_type unsigned int
-#endif
-
-typedef struct
-{
-    party_id_type id;
-    int votes;
-    int seats;
-} party;
+#include "seat_alloc_utils.h"
 
 party party_new(const party_id_type id, int votes)
 {
