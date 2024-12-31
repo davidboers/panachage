@@ -1,40 +1,55 @@
 {
   "tasks": [
+    // Compile binaries
     {
       "type": "shell",
       "label": "Compile miniparser",
       "command": "g++",
-      "args": ["bin/miniparser.cpp", "-o", "bin/miniparser.exe"],
+      "args": [
+        "bin/miniparser.cpp",
+        "-L.",
+        "-lvotefile",
+        "-o",
+        "bin/miniparser.exe"
+      ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Compile 'votes' yacc", "Compile 'votes' lex"],
-      "dependsOrder": "sequence",
+      "dependsOn": ["Archive votefile library"],
       "detail": "Compile miniparser bin"
     },
     {
       "type": "shell",
       "label": "Compile votefile simplifier",
       "command": "g++",
-      "args": ["bin/simplifyvotefile.cpp", "-o", "bin/simplifyvotefile.exe"],
+      "args": [
+        "bin/simplifyvotefile.cpp",
+        "-L.",
+        "-lvotefile",
+        "-o",
+        "bin/simplifyvotefile.exe"
+      ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Compile 'votes' yacc", "Compile 'votes' lex"],
-      "dependsOrder": "sequence",
+      "dependsOn": ["Archive votefile library"],
       "detail": "Compile votefile simplifier for distribution"
     },
+
+    // Compile tests
     {
       "type": "shell",
       "label": "Compile votefile simplifier test",
       "command": "g++",
       "args": [
         "bin/simplifyvotefile.cpp",
+        "-L.",
+        "-lvotefile",
         "-o",
         "bin/simplifyvotefiletest.exe",
         "-DTEST"
       ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Compile 'votes' yacc", "Compile 'votes' lex"],
+      "dependsOn": ["Archive votefile library"],
       "dependsOrder": "sequence",
       "detail": "Compile votefile simplifier with test"
     },
@@ -42,22 +57,32 @@
       "type": "shell",
       "label": "Compile votefile",
       "command": "g++",
-      "args": ["tests/votefile.cpp", "-o", "tests/votefile.exe"],
+      "args": [
+        "tests/votefile.cpp",
+        "-L.",
+        "-lvotefile",
+        "-o",
+        "tests/votefile.exe"
+      ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Compile 'votes' yacc", "Compile 'votes' lex"],
-      "dependsOrder": "sequence",
+      "dependsOn": ["Archive votefile library"],
       "detail": "Compile votefile test"
     },
     {
       "type": "shell",
       "label": "Compile partylistfile",
       "command": "g++",
-      "args": ["tests/partylistfile.cpp", "-o", "tests/partylistfile.exe"],
+      "args": [
+        "tests/partylistfile.cpp",
+        "-L.",
+        "-lpartylistfile",
+        "-o",
+        "tests/partylistfile.exe"
+      ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Compile 'partylist' yacc", "Compile 'partylist' lex"],
-      "dependsOrder": "sequence",
+      "dependsOn": ["Archive partylistfile library"],
       "detail": "Compile partylist test"
     },
     {
@@ -80,12 +105,40 @@
     },
     {
       "type": "shell",
+      "label": "Compile Liechtenstein test",
+      "command": "g++",
+      "args": [
+        "tests/liechtenstein.cpp",
+        "-L.",
+        "-lham",
+        "-lpartylistfile",
+        "-o",
+        "tests/liechtenstein.exe"
+      ],
+      "group": "build",
+      "dependsOn": ["Archive HAM library", "Archive partylistfile library"],
+      "detail": "Compile Liechtenstein test while linking static HAM library"
+    },
+
+    // Compile Yacc
+    {
+      "type": "shell",
       "label": "Compile 'votes' yacc",
       "command": "bison",
       "args": ["-dy", "votes.y", "-b", "votes"],
       "group": "build",
       "detail": "Create 'votes.tab.c' and 'votes.tab.h'"
     },
+    {
+      "type": "shell",
+      "label": "Compile 'partylist' yacc",
+      "command": "bison",
+      "args": ["-dy", "partylist.y", "-b", "partylist"],
+      "group": "build",
+      "detail": "Create 'partylist.tab.c' and 'partylist.tab.h'"
+    },
+
+    // Compile Lex
     {
       "type": "shell",
       "label": "Compile 'votes' lex",
@@ -96,19 +149,33 @@
     },
     {
       "type": "shell",
-      "label": "Compile 'partylist' yacc",
-      "command": "bison",
-      "args": ["-dy", "partylist.y", "-b", "partylist"],
-      "group": "build",
-      "detail": "Create 'partylist.tab.c' and 'partylist.tab.h'"
-    },
-    {
-      "type": "shell",
       "label": "Compile 'partylist' lex",
       "command": "flex",
       "args": ["-o", "partylist_lexer.c", "partylist.l"],
       "group": "build",
       "detail": "Create 'partylist_lexer.c'"
+    },
+
+    // Compile static libraries
+    {
+      "type": "shell",
+      "label": "Compile votefile library",
+      "command": "g++",
+      "args": ["-c", "votes_lexer.c", "-o", "votefile.o"],
+      "dependsOn": ["Compile 'votes' yacc", "Compile 'votes' lex"],
+      "dependsOrder": "sequence",
+      "group": "build",
+      "detail": "Compile votefile Yacc and Lexer to static library 'votefile.o'"
+    },
+    {
+      "type": "shell",
+      "label": "Compile partylistfile library",
+      "command": "g++",
+      "args": ["-c", "partylist_lexer.c", "-o", "partylistfile.o"],
+      "dependsOn": ["Compile 'partylist' yacc", "Compile 'partylist' lex"],
+      "dependsOrder": "sequence",
+      "group": "build",
+      "detail": "Compile partylistfile Yacc and Lexer to static library 'partylistfile.o'"
     },
     {
       "type": "shell",
@@ -118,6 +185,26 @@
       "group": "build",
       "detail": "Compile to static library 'ham.o'"
     },
+
+    // Archive libraries
+    {
+      "type": "shell",
+      "label": "Archive votefile library",
+      "command": "ar",
+      "args": ["rcs", "libvotefile.a", "votefile.o"],
+      "group": "build",
+      "dependsOn": ["Compile votefile library"],
+      "detail": "Archive 'votefile.o' to 'votefile.a'"
+    },
+    {
+      "type": "shell",
+      "label": "Archive partylistfile library",
+      "command": "ar",
+      "args": ["rcs", "libpartylistfile.a", "partylistfile.o"],
+      "group": "build",
+      "dependsOn": ["Compile partylistfile library"],
+      "detail": "Archive 'partylistfile.o' to 'partylistfile.a'"
+    },
     {
       "type": "shell",
       "label": "Archive HAM library",
@@ -126,21 +213,6 @@
       "group": "build",
       "dependsOn": ["Compile HAM as library"],
       "detail": "Archive 'ham.o' to 'libham.a'"
-    },
-    {
-      "type": "shell",
-      "label": "Compile Liechtenstein test",
-      "command": "g++",
-      "args": [
-        "tests/liechtenstein.cpp",
-        "-L.",
-        "-lham",
-        "-o",
-        "tests/liechtenstein.exe"
-      ],
-      "group": "build",
-      "dependsOn": ["Archive HAM library"],
-      "detail": "Compile Liechtenstein test while linking static HAM library"
     }
   ],
   "version": "2.0.0"

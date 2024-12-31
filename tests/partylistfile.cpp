@@ -2,9 +2,7 @@
 #include <iomanip>
 #include <iostream>
 
-#define JUST_PARTYLIST
-
-#include "../parse_file.cpp"
+#include "../partylist.tab.h"
 
 using namespace panachage;
 

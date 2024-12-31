@@ -1,5 +1,3 @@
-// bison -dy votes.y -b votes
-
 %define api.prefix {v}
 %parse-param {const char* filename}
 %parse-param {std::vector<panachage::Vote*>* votes}
@@ -20,6 +18,8 @@
 using panachage::partylist;
 using panachage::Vote;
 using panachage::candidate;
+
+extern int vlex();
 
 typedef std::vector<Vote *> *yy_votes_param;
 typedef std::vector<partylist *> yy_lists_param;
@@ -95,7 +95,12 @@ inline void make_new_vote(yy_votes_param votes, Vote *v)
 %code requires {
 #include "vote.hpp"
 #include "partylist.cpp"
-#include "display.cpp"
+#include "lex_utils.h"
+
+namespace panachage {
+std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists, bool create_new_lists = false);
+void parseSingleVote(const char *input, std::vector<partylist *> lists);
+}
 }
 
 %define parse.error verbose
@@ -149,7 +154,9 @@ numbers : number                { yy_lst_init($$, $1);   }
 
 namespace panachage {
 
-std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists, bool create_new_lists = false)
+void displayAllCandidates(std::vector<partylist *> lists);
+
+std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists, bool create_new_lists)
 {
       reset_buffer();
       yyin = fopen(filename, "r");

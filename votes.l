@@ -4,10 +4,10 @@
 
 %{
 
-// flex -o votes_lexer.c votes.l
-
 #include "lex_utils.h"
-#include "votes.tab.h"
+#include "votes.tab.c"
+
+YY_INIT_COLUMN;
 
 %}
 

@@ -4,8 +4,8 @@
 #include <fstream>
 #include <bits/stdc++.h>
 
-#define JUST_VOTES
-#include "../parse_file.cpp"
+#include "../display.cpp"
+#include "../votes.tab.h"
 
 using namespace panachage;
 

@@ -4,8 +4,8 @@
 #include <vector>
 #include <string.h>
 
-#define JUST_VOTES
-#include "../parse_file.cpp"
+#include "../display.cpp"
+#include "../votes.tab.h"
 #include "../tests/templates.hpp"
 
 using namespace panachage;

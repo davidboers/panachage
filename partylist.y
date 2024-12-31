@@ -1,5 +1,3 @@
-// bison -dy partylist.y -b partylist
-
 %define api.prefix {pl}
 %parse-param {const char* filename}
 %parse-param {panachage::partylist& pl}
@@ -13,6 +11,8 @@
 #define YY_DEFAULT_TEMP_PLNAME ""
 #define YY_DEFAULT_TEMP_PLID 1
 #define YY_DEFAULT_TEMP_ALV 0
+
+extern int pllex();
 
 static std::string yy_temp_plname = YY_DEFAULT_TEMP_PLNAME;
 static panachage::partylist::id_type yy_temp_plid = YY_DEFAULT_TEMP_PLID;
@@ -28,6 +28,12 @@ inline void plerror(const char *filename, panachage::partylist &pl, char const *
 %code requires {
 #include "vote.hpp"
 #include "partylist.cpp"
+#include "lex_utils.h"
+
+namespace panachage {
+std::string nameFromFile(const char *filename, const char *ext = ".txt");
+partylist parsePartyListFile(const char *filename, const char *ext = ".txt");
+}
 }
 
 %define parse.error verbose
@@ -93,7 +99,7 @@ cand_votes : '+' number { $$ = $2; } ;
 
 namespace panachage {
 
-std::string nameFromFile(const char *filename, const char *ext = ".txt")
+std::string nameFromFile(const char *filename, const char *ext)
 {
        char name[strlen(filename)];
        strcpy(name, filename);
@@ -106,7 +112,7 @@ std::string nameFromFile(const char *filename, const char *ext = ".txt")
        return std::string(name);
 }
 
-partylist parsePartyListFile(const char *filename, const char *ext = ".txt")
+partylist parsePartyListFile(const char *filename, const char *ext)
 {
        yy_temp_plid = YY_DEFAULT_TEMP_PLID;
        yy_temp_alv = YY_DEFAULT_TEMP_ALV;

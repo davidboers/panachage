@@ -2,9 +2,7 @@
 
 #include "templates.hpp"
 
-#define JUST_VOTES
-
-#include "../parse_file.cpp"
+#include "../votes.tab.h"
 #include "../display.cpp"
 
 using namespace panachage;

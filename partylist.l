@@ -4,10 +4,23 @@
 
 %{
 
-// flex -o partylist_lexer.c partylist.l
-
 #include "lex_utils.h"
-#include "partylist.tab.h"
+#include "partylist.tab.c"
+
+YY_INIT_COLUMN;
+
+void handle_anything_q(char *dest, char *buffer)
+{
+    const size_t len = strlen(buffer);
+    memmove(dest, buffer + 1, len - 1);
+    dest[len - 2] = 0;
+}
+
+void handle_anything_a(char *dest, char *buffer)
+{
+    const size_t len = strlen(buffer);
+    memmove(dest, buffer + 1, len - 1);
+}
 
 #define YY_MAKE_TEXT_Q                   \
     pllval.s = YY_ALLOC_VAL_MEM;         \
