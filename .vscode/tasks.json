@@ -7,7 +7,36 @@
       "args": ["bin/miniparser.cpp", "-o", "bin/miniparser.exe"],
       "problemMatcher": ["$gcc"],
       "group": "build",
+      "dependsOn": ["Compile 'votes' yacc", "Compile 'votes' lex"],
+      "dependsOrder": "sequence",
       "detail": "Compile miniparser bin"
+    },
+    {
+      "type": "shell",
+      "label": "Compile votefile simplifier",
+      "command": "g++",
+      "args": ["bin/simplifyvotefile.cpp", "-o", "bin/simplifyvotefile.exe"],
+      "problemMatcher": ["$gcc"],
+      "group": "build",
+      "dependsOn": ["Compile 'votes' yacc", "Compile 'votes' lex"],
+      "dependsOrder": "sequence",
+      "detail": "Compile votefile simplifier for distribution"
+    },
+    {
+      "type": "shell",
+      "label": "Compile votefile simplifier test",
+      "command": "g++",
+      "args": [
+        "bin/simplifyvotefile.cpp",
+        "-o",
+        "bin/simplifyvotefiletest.exe",
+        "-DTEST"
+      ],
+      "problemMatcher": ["$gcc"],
+      "group": "build",
+      "dependsOn": ["Compile 'votes' yacc", "Compile 'votes' lex"],
+      "dependsOrder": "sequence",
+      "detail": "Compile votefile simplifier with test"
     },
     {
       "type": "shell",
@@ -17,6 +46,7 @@
       "problemMatcher": ["$gcc"],
       "group": "build",
       "dependsOn": ["Compile 'votes' yacc", "Compile 'votes' lex"],
+      "dependsOrder": "sequence",
       "detail": "Compile votefile test"
     },
     {
@@ -27,6 +57,7 @@
       "problemMatcher": ["$gcc"],
       "group": "build",
       "dependsOn": ["Compile 'partylist' yacc", "Compile 'partylist' lex"],
+      "dependsOrder": "sequence",
       "detail": "Compile partylist test"
     },
     {

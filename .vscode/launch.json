@@ -12,6 +12,16 @@
       "preLaunchTask": "Compile miniparser"
     },
     {
+      "name": "Debug votefile simplifier",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/simplifyvotefiletest.exe",
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/bin",
+      "MIMode": "gdb",
+      "preLaunchTask": "Compile votefile simplifier test"
+    },
+    {
       "name": "Debug vote file",
       "type": "cppdbg",
       "request": "launch",
