@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <iostream>
 
+#include "../yacc_tools.c"
 #include "../partylist.tab.h"
 
 using namespace panachage;

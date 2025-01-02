@@ -3,13 +3,9 @@
 #include <string.h>
 #include <stdbool.h>
 
-extern int yylineno;
-extern int yycolumn;
-extern char *yytext;
-extern int yyleng;
-extern FILE *yyin;
+#include "yacc_tools.h"
 
-void yacc_error(const char *filename, char const *s, const char *t)
+void yacc_error(const char *filename, char const *s, const char *t, FILE *yyin, int yylineno, int yycolumn, int yyleng, char *yytext)
 {
     const int expr_size = 255;
     char expr[expr_size];
@@ -80,7 +76,7 @@ void yacc_error(const char *filename, char const *s, const char *t)
     printf("\n");
 }
 
-bool yy_doesFileExist(const char *filename)
+bool yy_doesFileExist(const char *filename, FILE *yyin)
 {
     if (!yyin)
     {
@@ -89,13 +85,6 @@ bool yy_doesFileExist(const char *filename)
         return false;
     }
     return true;
-}
-
-void reset_buffer()
-{
-    yylineno = 1;
-    yycolumn = 1;
-    YY_FLUSH_BUFFER;
 }
 
 void sanitize_path(char *path)

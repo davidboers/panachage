@@ -4,16 +4,17 @@
 
 %{
 
+int vcolumn = 1;
+#define yycolumn vcolumn
+
 #include "lex_utils.h"
 #include "votes.tab.c"
-
-YY_INIT_COLUMN;
 
 %}
 
 %%
 
-[0-9]+  YY_MAKE_INT(vlval.i)
+[0-9]+  YY_MAKE_INT(vlval.i, vnumber)
 [ \t]   ;
 #.*     ;
 [\n\r]  YY_RESET_COLUMN

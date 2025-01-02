@@ -2,6 +2,7 @@
 
 #include "templates.hpp"
 
+#include "../yacc_tools.c"
 #include "../votes.tab.h"
 #include "../display.cpp"
 

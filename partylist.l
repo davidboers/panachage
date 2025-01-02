@@ -4,10 +4,11 @@
 
 %{
 
+int plcolumn = 1;
+#define yycolumn plcolumn
+
 #include "lex_utils.h"
 #include "partylist.tab.c"
-
-YY_INIT_COLUMN;
 
 void handle_anything_q(char *dest, char *buffer)
 {
@@ -45,7 +46,7 @@ anything          .*
 ".alv"            return opt_alv;
 "begin"           return init_cmd;
 
-[0-9]+              YY_MAKE_INT(pllval.i)
+[0-9]+              YY_MAKE_INT(pllval.i, plnumber)
 [ \t]               ;
 [\n\r]              YY_RESET_COLUMN
 <<EOF>>             YY_END_FILE

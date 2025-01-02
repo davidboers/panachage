@@ -8,13 +8,14 @@
       "args": [
         "bin/miniparser.cpp",
         "-L.",
+        "-lyacc_tools",
         "-lvotefile",
         "-o",
         "bin/miniparser.exe"
       ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Archive votefile library"],
+      "dependsOn": ["Archive Yacc tools", "Archive votefile library"],
       "detail": "Compile miniparser bin"
     },
     {
@@ -24,13 +25,14 @@
       "args": [
         "bin/simplifyvotefile.cpp",
         "-L.",
+        "-lyacc_tools",
         "-lvotefile",
         "-o",
         "bin/simplifyvotefile.exe"
       ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Archive votefile library"],
+      "dependsOn": ["Archive Yacc tools", "Archive votefile library"],
       "detail": "Compile votefile simplifier for distribution"
     },
 
@@ -42,6 +44,7 @@
       "args": [
         "bin/simplifyvotefile.cpp",
         "-L.",
+        "-lyacc_tools",
         "-lvotefile",
         "-o",
         "bin/simplifyvotefiletest.exe",
@@ -49,7 +52,7 @@
       ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Archive votefile library"],
+      "dependsOn": ["Archive Yacc tools", "Archive votefile library"],
       "dependsOrder": "sequence",
       "detail": "Compile votefile simplifier with test"
     },
@@ -60,13 +63,14 @@
       "args": [
         "tests/votefile.cpp",
         "-L.",
+        "-lyacc_tools",
         "-lvotefile",
         "-o",
         "tests/votefile.exe"
       ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Archive votefile library"],
+      "dependsOn": ["Archive Yacc tools", "Archive votefile library"],
       "detail": "Compile votefile test"
     },
     {
@@ -76,13 +80,14 @@
       "args": [
         "tests/partylistfile.cpp",
         "-L.",
+        "-lyacc_tools",
         "-lpartylistfile",
         "-o",
         "tests/partylistfile.exe"
       ],
       "problemMatcher": ["$gcc"],
       "group": "build",
-      "dependsOn": ["Archive partylistfile library"],
+      "dependsOn": ["Archive Yacc tools", "Archive partylistfile library"],
       "detail": "Compile partylist test"
     },
     {
@@ -111,12 +116,17 @@
         "tests/liechtenstein.cpp",
         "-L.",
         "-lham",
+        "-lyacc_tools",
         "-lpartylistfile",
         "-o",
         "tests/liechtenstein.exe"
       ],
       "group": "build",
-      "dependsOn": ["Archive HAM library", "Archive partylistfile library"],
+      "dependsOn": [
+        "Archive HAM library",
+        "Archive Yacc tools",
+        "Archive partylistfile library"
+      ],
       "detail": "Compile Liechtenstein test while linking static HAM library"
     },
 
@@ -159,6 +169,14 @@
     // Compile static libraries
     {
       "type": "shell",
+      "label": "Compile Yacc tools",
+      "command": "gcc",
+      "args": ["-c", "yacc_tools.c", "-o", "yacc_tools.o"],
+      "group": "build",
+      "detail": "Compile Yacc tools definitions to static library 'yacc_tools.o'"
+    },
+    {
+      "type": "shell",
       "label": "Compile votefile library",
       "command": "g++",
       "args": ["-c", "votes_lexer.c", "-o", "votefile.o"],
@@ -189,12 +207,21 @@
     // Archive libraries
     {
       "type": "shell",
+      "label": "Archive Yacc tools",
+      "command": "ar",
+      "args": ["rcs", "libyacc_tools.a", "yacc_tools.o"],
+      "group": "build",
+      "dependsOn": ["Compile Yacc tools"],
+      "detail": "Archive 'yacc_tools.o' to 'libyacc_tools.a'"
+    },
+    {
+      "type": "shell",
       "label": "Archive votefile library",
       "command": "ar",
       "args": ["rcs", "libvotefile.a", "votefile.o"],
       "group": "build",
       "dependsOn": ["Compile votefile library"],
-      "detail": "Archive 'votefile.o' to 'votefile.a'"
+      "detail": "Archive 'votefile.o' to 'libvotefile.a'"
     },
     {
       "type": "shell",
@@ -203,7 +230,7 @@
       "args": ["rcs", "libpartylistfile.a", "partylistfile.o"],
       "group": "build",
       "dependsOn": ["Compile partylistfile library"],
-      "detail": "Archive 'partylistfile.o' to 'partylistfile.a'"
+      "detail": "Archive 'partylistfile.o' to 'libpartylistfile.a'"
     },
     {
       "type": "shell",

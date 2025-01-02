@@ -8,7 +8,7 @@
 
 #include <vector>
 
-#include "yacc_tools.c"
+#include "yacc_tools.h"
 
 #include "candidate.hpp"
 #include "full_list.cpp"
@@ -26,7 +26,7 @@ typedef std::vector<partylist *> yy_lists_param;
 
 inline void verror(const char *filename, yy_votes_param votes, yy_lists_param lists, bool create_new_lists, char const *s)
 {
-    yacc_error(filename, s, "vote");
+    yacc_error(filename, s, "vote", yyin, yylineno, yycolumn, yyleng, yytext);
 }
 
 partylist *yy_listById(yy_lists_param &lists, partylist::id_type id, bool create_new_lists)
@@ -120,7 +120,7 @@ void parseSingleVote(const char *input, std::vector<partylist *> lists);
 %token sep 124     // |
 %token numsep 44   // ,
 
-%token <i> number
+%token <i> vnumber
 
 %type <pl> partylist
 %type <v> vote
@@ -134,8 +134,8 @@ start : parcel
       | start parcel
       ;
 
-parcel : number star vote { make_new_copied_vote(votes, $3, $1); }
-       | vote             { make_new_vote(votes, $1);            }
+parcel : vnumber star vote { make_new_copied_vote(votes, $3, $1); }
+       | vote              { make_new_vote(votes, $1);            }
        ;
 
 vote : full sep partylist                            { $$ = new panachage::FullListVote($3);            }
@@ -144,10 +144,10 @@ vote : full sep partylist                            { $$ = new panachage::FullL
      | blank sep numbers                             { $$ = new panachage::FreeVote($3);                }
      ;
 
-partylist : number { $$ = yy_listById(lists, $1, create_new_lists); } ;
+partylist : vnumber { $$ = yy_listById(lists, $1, create_new_lists); } ;
 
-numbers : number                { yy_lst_init($$, $1);   }
-        | numbers numsep number { yy_lst_append($$, $3); }
+numbers : vnumber                { yy_lst_init($$, $1);   }
+        | numbers numsep vnumber { yy_lst_append($$, $3); }
         ;
 
 %%
@@ -158,9 +158,9 @@ void displayAllCandidates(std::vector<partylist *> lists);
 
 std::vector<Vote *> *parseVoteFile(const char *filename, std::vector<Vote *> *votes, std::vector<partylist *> lists, bool create_new_lists)
 {
-      reset_buffer();
+      RESET_BUFFER;
       yyin = fopen(filename, "r");
-      if (!yy_doesFileExist(filename))
+      if (!yy_doesFileExist(filename, yyin))
             return votes;
       vparse(filename, votes, lists, create_new_lists);
       fclose(yyin);

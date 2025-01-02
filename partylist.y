@@ -4,7 +4,7 @@
 
 %{
 
-#include "yacc_tools.c"
+#include "yacc_tools.h"
 
 #include "partylist.cpp"
 
@@ -20,7 +20,7 @@ static int yy_temp_alv = YY_DEFAULT_TEMP_ALV;
 
 inline void plerror(const char *filename, panachage::partylist &pl, char const *s)
 {
-    yacc_error(filename, s, "party list");
+    yacc_error(filename, s, "party list", yyin, yylineno, yycolumn, yyleng, yytext);
 }
 
 %}
@@ -55,7 +55,7 @@ partylist parsePartyListFile(const char *filename, const char *ext = ".txt");
 %token <s> cand_name
 
 %token <s> text
-%token <i> number
+%token <i> plnumber
 
 %start start
 
@@ -70,8 +70,8 @@ options : option
         ;
 
 option : opt_name '=' text   { yy_temp_plname = $3; }
-       | opt_id '=' number   { yy_temp_plid = $3;   }
-       | opt_alv '=' number  { yy_temp_alv = $3;    }
+       | opt_id '=' plnumber   { yy_temp_plid = $3;   }
+       | opt_alv '=' plnumber  { yy_temp_alv = $3;    }
        ;
 
 // Initiator
@@ -91,9 +91,9 @@ candidate : cand_id cand_name cand_votes { pl.newCandidate($1, $3); }
           | cand_id cand_votes           { pl.newCandidate($1, $2); } 
           ;
 
-cand_id : '#' number { $$ = $2; } ;
+cand_id : '#' plnumber { $$ = $2; } ;
 
-cand_votes : '+' number { $$ = $2; } ;
+cand_votes : '+' plnumber { $$ = $2; } ;
 
 %%
 
@@ -118,11 +118,11 @@ partylist parsePartyListFile(const char *filename, const char *ext)
        yy_temp_alv = YY_DEFAULT_TEMP_ALV;
        yy_temp_plname = YY_DEFAULT_TEMP_PLNAME;
        yy_temp_plname = nameFromFile(filename, ext);
-       reset_buffer();
+       RESET_BUFFER;
        yyin = fopen(filename, "r");
        partylist pl;
-       if (!yy_doesFileExist(filename))
-       return pl;
+       if (!yy_doesFileExist(filename, yyin))
+              return pl;
        plparse(filename, pl);
        fclose(yyin);
        return pl;
