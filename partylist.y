@@ -69,7 +69,7 @@ options : option
         | options option
         ;
 
-option : opt_name '=' text   { yy_temp_plname = $3; }
+option : opt_name '=' text     { yy_temp_plname = $3; }
        | opt_id '=' plnumber   { yy_temp_plid = $3;   }
        | opt_alv '=' plnumber  { yy_temp_alv = $3;    }
        ;
@@ -89,6 +89,7 @@ candidates : candidate
 
 candidate : cand_id cand_name cand_votes { pl.newCandidate($1, $3); } 
           | cand_id cand_votes           { pl.newCandidate($1, $2); } 
+          | cand_id                      { pl.newCandidate($1);     }
           ;
 
 cand_id : '#' plnumber { $$ = $2; } ;
